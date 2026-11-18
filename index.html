@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheena R Golani</title>
+<meta name="description" content="Sheena R Golani. Luxury editorial photographer and creative director. Fashion, jewellery, beauty and product. Dubai, available worldwide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1A1A1A; --paper:#FFFFFF; --stone:#EFEDE8; --mute:#8A8A85; --line:#E4E2DD;
+  --mono:"Courier New", Courier, "Courier Prime", monospace;
+  --sans:"Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block}
+.view{display:none;opacity:0;transition:opacity .5s ease}
+.view.on{display:block}
+.view.show{opacity:1}
+
+/* ============ HOME (replica of Readymag) ============ */
+#home{position:relative;height:calc(100vh + 9.5vw);min-height:640px;overflow:hidden}
+.h-nav{position:fixed;top:10px;left:12px;right:16px;display:flex;justify-content:space-between;z-index:20;pointer-events:none}
+.h-nav a{font-size:30px;font-weight:400;letter-spacing:-.005em;pointer-events:auto;transition:opacity .3s}
+.h-nav a:hover{opacity:.45}
+.cats{position:absolute;top:0;left:0;right:0;height:100vh}
+.cat{position:absolute;top:49%;transform:translate(-50%,-50%);z-index:5}
+.cat span{position:relative;z-index:3;font-size:14px;font-weight:700;cursor:pointer;display:block;padding:10px 16px}
+.cat:nth-child(1){left:27.2%} .cat:nth-child(2){left:49.4%} .cat:nth-child(3){left:70.5%}
+.cat .peek{position:absolute;left:50%;top:50%;width:264px;height:350px;transform:translate(-50%,-50%);opacity:0;transition:opacity .45s ease;pointer-events:none;z-index:1;background:#f6f6f4}
+.cat .peek img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%;opacity:0;transition:opacity .25s}
+.cat .peek img.cur{opacity:1}
+.cat:hover .peek,.cat.touch .peek{opacity:1}
+.bigname{position:absolute;left:1.55vw;bottom:-0.6vw;font-family:var(--mono);font-weight:400;font-size:10.4vw;line-height:1;white-space:nowrap;letter-spacing:0;color:var(--ink)}
+
+/* ============ SHARED INNER HEADER (Astrae inspired) ============ */
+.hd{position:fixed;top:0;left:0;right:0;height:52px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 12px;background:rgba(255,255,255,.92);backdrop-filter:blur(6px);z-index:30}
+.hd .brand{font-family:var(--mono);font-size:17px;letter-spacing:.01em}
+.hd .star{font-size:15px;justify-self:center;line-height:1}
+.hd nav{justify-self:end;display:flex;gap:56px;font-size:13px;font-weight:700}
+.hd nav a{display:flex;align-items:center;gap:8px}
+.hd nav a::before{content:"\2733";font-size:10px;font-weight:400;opacity:0;transition:opacity .3s}
+.hd nav a.act::before,.hd nav a:hover::before{opacity:1}
+.ft{position:fixed;left:0;right:0;bottom:0;height:34px;display:grid;grid-template-columns:2fr 1fr 1fr 2fr 1fr;align-items:center;padding:0 12px;font-size:9.5px;letter-spacing:.02em;background:#fff;z-index:30}
+.ft span:last-child{text-align:right}
+.ft a:hover{opacity:.5}
+
+/* ============ WORK INDEX ============ */
+.filters{position:fixed;top:52px;left:12px;right:12px;height:36px;display:flex;gap:28px;align-items:center;font-size:11px;letter-spacing:.06em;text-transform:uppercase;z-index:25;background:#fff}
+.filters button{background:none;border:0;font:inherit;color:var(--mute);cursor:pointer;padding:4px 0;letter-spacing:inherit;text-transform:inherit}
+.filters button sup{font-size:8px;margin-left:2px}
+.filters button.act{color:var(--ink)}
+.filters .count{margin-left:auto;color:var(--mute)}
+.rail{position:fixed;top:96px;bottom:34px;left:0;right:0;overflow-x:auto;overflow-y:hidden;display:flex;gap:14px;padding:0 12px;scrollbar-width:none;cursor:grab}
+.rail::-webkit-scrollbar{display:none}
+.tile{flex:0 0 auto;height:100%;display:flex;flex-direction:column;transition:opacity .4s, transform .4s}
+.tile .ph{flex:1;aspect-ratio:var(--ar,0.72);overflow:hidden;background:var(--stone);min-height:0}
+.tile .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.tile:hover .ph img{transform:scale(1.035)}
+.tile .cap{height:44px;display:grid;grid-template-columns:76px 1fr auto;align-items:center;font-size:13px;font-weight:700}
+.tile .cap i{font-style:normal;font-weight:400;font-size:10px}
+.tile .cap em{font-style:normal;font-weight:400;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.rail.dim .tile{opacity:.35}
+.rail.dim .tile:hover{opacity:1}
+
+/* ============ PROJECT ============ */
+.prail{bottom:104px}
+.frame{flex:0 0 auto;height:100%;overflow:hidden;background:var(--stone)}
+.frame img{width:100%;height:100%;object-fit:cover}
+.card{flex:0 0 auto;height:100%;aspect-ratio:.8;background:var(--stone);display:flex;flex-direction:column;justify-content:space-between;padding:22px}
+.card .t{font-family:var(--mono);font-size:clamp(34px,5.2vw,84px);line-height:.95;letter-spacing:-.01em;margin:auto 0}
+.card .s{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.card.ink{background:var(--ink);color:#fff}
+.meta{position:fixed;left:0;right:0;bottom:34px;height:70px;display:grid;grid-template-columns:2fr 4fr 3fr 1.4fr;gap:20px;padding:12px 12px 0;font-size:12px;line-height:1.45}
+.meta h1{font-size:13px;font-weight:700;line-height:1.3}
+.meta dl{display:grid;grid-template-columns:auto 1fr;gap:0 14px;font-size:10.5px}
+.meta dt{color:var(--mute);text-transform:uppercase;letter-spacing:.05em;font-size:9.5px;padding-top:1px}
+.meta .nx{text-align:right;font-weight:700;font-size:12px}
+.meta .nx a{display:inline-block}
+.meta .nx a:hover{opacity:.5}
+.meta .nx small{display:block;font-weight:400;color:var(--mute);font-size:10px;margin-bottom:2px}
+
+/* ============ CONNECT (structure from Readymag page 2) ============ */
+#connect{padding:52px 0 80px}
+.c-wrap{max-width:1300px;margin:0 auto;padding:60px 6vw 40px;display:grid;grid-template-columns:repeat(12,1fr);gap:56px 24px}
+.lab{font-size:15px;letter-spacing:.02em;margin-bottom:18px;display:block}
+.c-about{grid-column:1/7}
+.c-about p{font-family:var(--mono);font-size:21px;line-height:1.35}
+.c-about p+p{margin-top:16px;font-family:var(--sans);font-size:13px;line-height:1.6;color:#444;max-width:440px}
+.c-contact{grid-column:8/13;font-size:14px;line-height:1.9}
+.c-contact a{border-bottom:1px solid var(--line)}
+.c-contact a:hover{border-color:var(--ink)}
+.c-portrait{grid-column:1/4;aspect-ratio:.75;overflow:hidden;background:var(--stone)}
+.c-portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.c-clients{grid-column:5/10;align-self:end}
+.c-clients ul,.c-features ul{list-style:none;font-size:14px;line-height:1.9}
+.c-clients li.ph{color:var(--mute)}
+.c-features{grid-column:1/6}
+.c-features li{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:5px 0}
+.c-features li span{color:var(--mute);font-size:11px}
+.c-ig{grid-column:7/13}
+.c-ig .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.c-ig .strip div{aspect-ratio:.8;overflow:hidden;background:var(--stone)}
+.c-ig .strip img{width:100%;height:100%;object-fit:cover}
+.c-ig a{font-size:14px}
+.c-form{grid-column:1/13;border-top:1px solid var(--ink);padding-top:28px;display:grid;grid-template-columns:repeat(12,1fr);gap:18px 24px}
+.c-form .lab{grid-column:1/4}
+.c-form form{grid-column:4/13;display:grid;grid-template-columns:1fr 1fr;gap:14px 24px}
+.c-form input,.c-form select,.c-form textarea{width:100%;border:0;border-bottom:1px solid var(--line);padding:10px 0;font:14px var(--sans);background:transparent;color:var(--ink);border-radius:0;outline:none}
+.c-form input:focus,.c-form select:focus,.c-form textarea:focus{border-color:var(--ink)}
+.c-form textarea{grid-column:1/3;resize:vertical;min-height:90px}
+.c-form button{grid-column:1/2;justify-self:start;background:var(--ink);color:#fff;border:0;font:700 12px var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:14px 26px;cursor:pointer}
+.c-form .note{grid-column:2/3;align-self:center;font-size:11px;color:var(--mute)}
+.c-name{font-family:var(--mono);font-size:10.4vw;line-height:1;white-space:nowrap;padding-left:1.55vw;margin-top:40px;overflow:hidden}
+
+/* ============ MOBILE ============ */
+@media (max-width:760px){
+  .h-nav a{font-size:22px}
+  .cat{left:50%!important}
+  .cat:nth-child(1){top:30%} .cat:nth-child(2){top:46%} .cat:nth-child(3){top:62%}
+  .cat .peek{width:190px;height:250px}
+  #home{height:100vh}
+  .bigname{bottom:2vh}
+  .hd nav{gap:22px}
+  .hd .brand{font-size:14px}
+  .ft{grid-template-columns:1fr 1fr;height:auto;padding:8px 12px;gap:2px}
+  .ft span:nth-child(3),.ft span:nth-child(4){display:none}
+  .filters{gap:16px;overflow-x:auto}
+  .filters .count{display:none}
+  .rail{position:static;flex-direction:column;overflow:visible;padding:100px 12px 60px;gap:26px;cursor:auto}
+  .tile,.frame,.card{height:auto;width:100%}
+  .tile .ph{aspect-ratio:var(--ar,.72);flex:none}
+  .frame img{height:auto}
+  .card{aspect-ratio:.8}
+  .meta{position:static;grid-template-columns:1fr;height:auto;padding:0 12px 80px}
+  .prail{padding-bottom:20px}
+  .c-wrap{grid-template-columns:1fr;gap:44px;padding:40px 16px}
+  .c-wrap>*{grid-column:1/-1!important}
+  .c-form{grid-template-columns:1fr}
+  .c-form form{grid-template-columns:1fr}
+  .c-form textarea,.c-form button,.c-form .note{grid-column:1/-1}
+}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<section id="home" class="view">
+  <div class="h-nav"><a href="#work">Work</a><a href="#connect">Connect</a></div>
+  <div class="cats">
+    <div class="cat" data-cat="fashion"><div class="peek"></div><span>Fashion</span></div>
+    <div class="cat" data-cat="jewellery"><div class="peek"></div><span>Jewellery</span></div>
+    <div class="cat" data-cat="beauty"><div class="peek"></div><span>Beauty</span></div>
+  </div>
+  <div class="bigname">Sheena R Golani</div>
+</section>
+
+<!-- WORK INDEX -->
+<section id="work" class="view">
+  <div class="filters" id="filters"></div>
+  <div class="rail" id="rail"></div>
+</section>
+
+<!-- PROJECT -->
+<section id="project" class="view">
+  <div class="rail prail" id="prail"></div>
+  <div class="meta" id="meta"></div>
+</section>
+
+<!-- CONNECT -->
+<section id="connect" class="view">
+  <div class="c-wrap">
+    <div class="c-about">
+      <span class="lab">*(ABOUT)</span>
+      <p>Dubai based luxury editorial photographer and creative director. Concept led imagery rooted in mood, composition and restraint.</p>
+      <p>Sheena works across fashion, jewellery, beauty and product, shaping each image from concept and casting through to light and final retouch. Based in Dubai, available worldwide.</p>
+    </div>
+    <div class="c-contact">
+      <span class="lab">*(CONTACT)</span>
+      Commissions &amp; enquiries<br>
+      <a href="mailto:hello@sheenagolani.com">hello@sheenagolani.com</a><br>
+      <a href="https://www.instagram.com/sheena____golani/" target="_blank" rel="noopener">Instagram</a> &nbsp;/&nbsp; <a href="https://www.linkedin.com/in/sheenagolani/" target="_blank" rel="noopener">LinkedIn</a><br>
+      Dubai, United Arab Emirates<br>Available Worldwide
+    </div>
+    <div class="c-portrait"><img data-img="3" alt="Sheena R Golani, beauty still life"></div>
+    <div class="c-clients">
+      <span class="lab">*(SELECTED CLIENTS)</span>
+      <ul>
+        <li class="ph">Client name</li><li class="ph">Client name</li><li class="ph">Client name</li><li class="ph">Client name</li><li class="ph">Client name</li>
+      </ul>
+    </div>
+    <div class="c-features">
+      <span class="lab">*(FEATURES)</span>
+      <ul>
+        <li>Vogue <span>Feature</span></li>
+        <li>Harper&rsquo;s Bazaar <span>Feature</span></li>
+        <li>L&rsquo;Officiel <span>Feature</span></li>
+        <li>Emirates Woman <span>Feature</span></li>
+        <li>The Hollywood Magazine <span>Cover, 2024</span></li>
+        <li>Harper&rsquo;s Bazaar Vietnam <span>Cover, 2023</span></li>
+        <li>ELLE Colombia <span>Cover</span></li>
+        <li>UAE Stories <span>Interview</span></li>
+      </ul>
+    </div>
+    <div class="c-ig">
+      <span class="lab">*(INSTAGRAM)</span>
+      <div class="strip"><div><img data-img="9" alt=""></div><div><img data-img="5" alt=""></div><div><img data-img="10" alt=""></div><div><img data-img="12" alt=""></div></div>
+      <a href="https://www.instagram.com/sheena____golani/" target="_blank" rel="noopener">@sheena____golani &nbsp;&#8599;</a>
+    </div>
+    <div class="c-form">
+      <span class="lab">*(BOOK A SHOOT)</span>
+      <form id="enq">
+        <input placeholder="Name" required>
+        <input placeholder="Email" type="email" required>
+        <input placeholder="Brand / Publication">
+        <select><option>Shoot type</option><option>Fashion</option><option>Jewellery</option><option>Beauty</option><option>Product</option><option>Campaign / Creative direction</option></select>
+        <input placeholder="Preferred dates">
+        <input placeholder="Location (Dubai or worldwide)">
+        <textarea placeholder="Tell us about the project"></textarea>
+        <button type="submit">Send enquiry</button>
+        <span class="note" id="enqnote">Replies within 48 hours.</span>
+      </form>
+    </div>
+  </div>
+  <div class="c-name">Sheena R Golani</div>
+</section>
+
+<header class="hd" id="hd" style="display:none">
+  <a class="brand" href="#home">Sheena R Golani</a>
+  <span class="star">&#10035;</span>
+  <nav><a href="#work" id="nv-work">Work</a><a href="#connect" id="nv-connect">Connect</a></nav>
+</header>
+<footer class="ft" id="ft" style="display:none">
+  <span>Dubai, United Arab Emirates. Available Worldwide</span>
+  <span><a href="https://www.instagram.com/sheena____golani/" target="_blank" rel="noopener">@sheena____golani</a></span>
+  <span><a href="mailto:hello@sheenagolani.com">hello@sheenagolani.com</a></span>
+  <span>Fashion / Jewellery / Beauty / Product</span>
+  <span>&copy; 2026 All rights reserved</span>
+</footer>
+
+<script>
+/* Images: Sheena's own work, currently served from the Readymag CDN.
+   In development, replace with her hi-res originals in /images. */
+const CDN="https://i-p.rmcdn.net/69e249dff000a0e0be56313a/6440784/image-";
+const IMG={
+  1:"ec9d9781-0ab6-4ae8-a772-844f93462923",  // red brow, eye close up (landscape)
+  2:"83b7d6d5-ff81-44f0-bcbe-56e73fc7db12",  // leather goods still life
+  3:"0cff5256-185e-43c8-ac15-59199979b83e",  // perfume and florals portrait
+  4:"7d248af3-83cf-4561-9366-d22cafd1c038",  // necklace on brush
+  5:"991cfb44-15a4-49d1-a9b2-d58c81cd9ddf",  // apple room fashion
+  6:"e832b1cd-30af-4c95-97c8-3aa05a534530",  // TOOLS earrings
+  7:"899f471b-bcde-4a26-b2a5-7a6adcbe5e65",  // sculpted black
+  8:"fc81cb6a-fda5-40d6-82ab-0017911355c1",  // stripe coat
+  9:"92586a76-547b-4edf-8f95-95252f16ee43",  // gold coil earring
+  10:"8c7cca9d-16ff-4677-878b-e4aa8aae5f9d", // lips
+  11:"7676fa0e-b1f3-4eb2-b5eb-301ad3f39c03", // runway
+  12:"5a1edd0b-024b-42d7-b626-e3a56d82089a"  // leather on hanger
+};
+const src=i=>CDN+IMG[i]+".png";
+const AR={1:1.44}; // landscape exception
+
+/* Projects. Titles, years and copy are placeholders to confirm with Sheena. */
+const P=[
+ {s:"the-apple-room",t:"The Apple Room",c:"fashion",y:"2025",cover:5,
+  d:"A fashion editorial staged inside a gilded salon, where an oversized green apple becomes set, prop and punctuation for a sculpted turquoise dress.",
+  cr:[["Category","Fashion editorial"],["Role","Photography, Creative direction"],["Location","Dubai"]],
+  g:[{i:5},{card:"The Apple Room",sub:["Fashion","2025"]},{i:5,pos:"50% 62%",z:1.9},{i:5,pos:"30% 30%",z:1.5}]},
+ {s:"sculpted-in-black",t:"Sculpted in Black",c:"fashion",y:"2025",cover:7,
+  d:"Architectural tailoring photographed as form first. Hard light, a pale wall and a collar that frames the face like a monument.",
+  cr:[["Category","Fashion"],["Role","Photography"],["Location","Dubai"]],
+  g:[{i:7},{i:7,pos:"50% 20%",z:1.8},{card:"Sculpted in Black",sub:["Fashion","2025"],ink:1},{i:7,pos:"50% 75%",z:1.6}]},
+ {s:"runway-notes",t:"Runway Notes",c:"fashion",y:"2025",cover:11,
+  d:"Fragments from the front row. Movement, sequins and red silk, read as cropped notes rather than full looks.",
+  cr:[["Category","Fashion, Runway"],["Role","Photography"],["Location","Worldwide"]],
+  g:[{i:11},{i:11,pos:"35% 40%",z:1.7},{card:"Runway Notes",sub:["Fashion","2025"]}]},
+ {s:"stripe",t:"Stripe",c:"fashion",y:"2024",cover:8,
+  d:"A back portrait built on a single graphic idea: colour moving in waves across a coat, set against soft drapery.",
+  cr:[["Category","Fashion"],["Role","Photography, Styling direction"],["Location","Dubai"]],
+  g:[{i:8},{card:"Stripe",sub:["Fashion","2024"]},{i:8,pos:"50% 60%",z:1.7}]},
+ {s:"tools",t:"Tools",c:"jewellery",y:"2025",cover:6,
+  d:"Fine jewellery placed among the instruments of making. Gemstones and enamel meet brushes and blades in a quiet, graphic still life series.",
+  cr:[["Category","Jewellery, Still life"],["Role","Photography, Creative direction"],["Location","Dubai"]],
+  g:[{i:6},{i:4},{card:"Tools",sub:["Jewellery","2025"]},{i:6,pos:"60% 35%",z:1.8},{i:4,pos:"50% 30%",z:1.7}]},
+ {s:"gold-coil",t:"Gold Coil",c:"jewellery",y:"2025",cover:9,
+  d:"One earring, one profile. A sculptural gold coil photographed close, with skin and shadow doing the rest.",
+  cr:[["Category","Jewellery, Beauty"],["Role","Photography"],["Location","Dubai"]],
+  g:[{i:9},{i:9,pos:"55% 70%",z:1.9},{card:"Gold Coil",sub:["Jewellery","2025"],ink:1}]},
+ {s:"red-brow",t:"Red Brow",c:"beauty",y:"2024",cover:1,
+  d:"A beauty close up where colour leads: lacquered red brows, violet lids and a gaze held behind the hand.",
+  cr:[["Category","Beauty"],["Role","Photography"],["Location","Dubai"]],
+  g:[{i:1},{card:"Red Brow",sub:["Beauty","2024"]},{i:1,pos:"30% 30%",z:1.6}]},
+ {s:"gloss",t:"Gloss",c:"beauty",y:"2025",cover:10,
+  d:"Macro beauty. Texture, shine and the soft architecture of the lip, photographed for a lip care launch moodboard.",
+  cr:[["Category","Beauty, Macro"],["Role","Photography"],["Location","Dubai"]],
+  g:[{i:10},{i:10,pos:"50% 45%",z:1.8},{card:"Gloss",sub:["Beauty","2025"],ink:1}]},
+ {s:"still-bloom",t:"Still Bloom",c:"beauty",tag:"product",y:"2025",cover:3,
+  d:"Fragrance as portrait. A bottle held among late flowers, lit like a Dutch still life and cast with a profile in shadow.",
+  cr:[["Category","Beauty, Fragrance"],["Role","Photography, Creative direction"],["Location","Dubai"]],
+  g:[{i:3},{card:"Still Bloom",sub:["Fragrance","2025"]},{i:3,pos:"50% 80%",z:1.8},{i:3,pos:"70% 25%",z:1.6}]},
+ {s:"maison-objects",t:"Maison Objects",c:"product",y:"2025",cover:12,
+  d:"Leather goods as sculpture. Monochrome product studies of luxury accessories, shot for clean ecommerce and campaign use.",
+  cr:[["Category","Product, Still life"],["Role","Photography"],["Location","Dubai"]],
+  g:[{i:12},{i:2},{card:"Maison Objects",sub:["Product","2025"],ink:1},{i:12,pos:"50% 30%",z:1.7}]}
+];
+const CATS={fashion:[5,7,11,8],jewellery:[6,4,9],beauty:[1,10,3]};
+const LABEL={all:"All",fashion:"Fashion",jewellery:"Jewellery",beauty:"Beauty",product:"Product"};
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+function imgTag(i,pos,z,alt){
+  const st=`object-position:${pos||"50% 30%"};${z?`transform:scale(${z});transform-origin:${pos||"50% 50%"}`:""}`;
+  return `<img loading="lazy" src="${src(i)}" style="${st}" alt="${alt||""}">`;
+}
+document.querySelectorAll("[data-img]").forEach(el=>el.src=src(el.dataset.img));
+
+/* ---------- home hover slideshows ---------- */
+document.querySelectorAll(".cat").forEach(cat=>{
+  const list=CATS[cat.dataset.cat], peek=cat.querySelector(".peek");
+  peek.innerHTML=list.map((i,k)=>`<img src="${src(i)}" class="${k?"":"cur"}" alt="">`).join("");
+  let t=null,k=0;
+  const imgs=[...peek.children];
+  const start=()=>{clearInterval(t);t=setInterval(()=>{imgs[k].classList.remove("cur");k=(k+1)%imgs.length;imgs[k].classList.add("cur")},650)};
+  const stop=()=>clearInterval(t);
+  cat.addEventListener("mouseenter",start);cat.addEventListener("mouseleave",stop);
+  cat.querySelector("span").addEventListener("click",()=>location.hash="work-"+cat.dataset.cat);
+});
+
+/* ---------- work index ---------- */
+let filter="all";
+function renderWork(){
+  const counts={all:P.length};P.forEach(p=>{counts[p.c]=(counts[p.c]||0)+1;if(p.tag)counts[p.tag]=(counts[p.tag]||0)+1});
+  $("#filters").innerHTML=Object.keys(LABEL).map(k=>`<button class="${k===filter?"act":""}" data-f="${k}">${LABEL[k]}<sup>${counts[k]||0}</sup></button>`).join("")+`<span class="count">Selected work, 2024 to 2026</span>`;
+  $("#filters").querySelectorAll("button").forEach(b=>b.onclick=()=>{location.hash=b.dataset.f==="all"?"work":"work-"+b.dataset.f});
+  const list=P.filter(p=>filter==="all"||p.c===filter||p.tag===filter);
+  $("#rail").innerHTML=list.map(p=>`
+    <a class="tile" href="#p-${p.s}" style="--ar:${AR[p.cover]?1.25:0.74}">
+      <div class="ph">${imgTag(p.cover,"50% 30%",0,p.t)}</div>
+      <div class="cap"><i>&#10035;</i><span>${p.t}</span><em>${LABEL[p.c]}</em></div>
+    </a>`).join("");
+  $("#rail").scrollLeft=0;
+}
+
+/* ---------- project ---------- */
+function renderProject(slug){
+  const n=P.findIndex(p=>p.s===slug); if(n<0){location.hash="work";return}
+  const p=P[n], nx=P[(n+1)%P.length];
+  $("#prail").innerHTML=p.g.map(it=>{
+    if(it.card) return `<div class="card ${it.ink?"ink":""}"><div class="s"><span>&#10035;</span><span>Sheena R Golani</span></div><div class="t">${it.card}</div><div class="s"><span>${it.sub[0]}</span><span>${it.sub[1]}</span></div></div>`;
+    const ar=AR[it.i]&&!it.z?AR[it.i]:0.8;
+    return `<div class="frame" style="aspect-ratio:${ar}">${imgTag(it.i,it.pos,it.z,p.t)}</div>`;
+  }).join("");
+  $("#meta").innerHTML=`
+    <div><h1>${p.t}<br>${p.y}</h1></div>
+    <div>${p.d}</div>
+    <dl>${p.cr.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join("")}</dl>
+    <div class="nx"><small>Next project</small><a href="#p-${nx.s}">${nx.t} &rarr;</a></div>`;
+  $("#prail").scrollLeft=0;
+  document.title=p.t+" | Sheena R Golani";
+}
+
+/* ---------- horizontal wheel + drag ---------- */
+document.querySelectorAll(".rail").forEach(r=>{
+  r.addEventListener("wheel",e=>{if(innerWidth<=760)return;if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){r.scrollLeft+=e.deltaY;e.preventDefault()}},{passive:false});
+  let down=false,x0=0,s0=0,moved=false;
+  r.addEventListener("mousedown",e=>{down=true;moved=false;x0=e.pageX;s0=r.scrollLeft});
+  addEventListener("mouseup",()=>down=false);
+  r.addEventListener("mousemove",e=>{if(!down)return;const dx=e.pageX-x0;if(Math.abs(dx)>4)moved=true;r.scrollLeft=s0-dx});
+  r.addEventListener("click",e=>{if(moved){e.preventDefault();e.stopPropagation()}},true);
+  r.addEventListener("dragstart",e=>e.preventDefault());
+});
+
+/* ---------- enquiry form (mock) ---------- */
+$("#enq").addEventListener("submit",e=>{e.preventDefault();$("#enqnote").textContent="Thank you. This is a design preview, the form will connect to the CRM in development.";});
+
+/* ---------- router ---------- */
+function route(){
+  const h=(location.hash||"#home").slice(1);
+  let v="home";
+  if(h.startsWith("work")){v="work";filter=h.split("-")[1]||"all";renderWork();document.title="Work | Sheena R Golani"}
+  else if(h.startsWith("p-")){v="project";renderProject(h.slice(2))}
+  else if(h==="connect"){v="connect";document.title="Connect | Sheena R Golani"}
+  else document.title="Sheena R Golani";
+  document.querySelectorAll(".view").forEach(s=>{s.classList.remove("on","show")});
+  const el=document.getElementById(v);el.classList.add("on");requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add("show")));
+  const inner=v!=="home";
+  $("#hd").style.display=inner?"grid":"none";
+  $("#ft").style.display=(v==="work"||v==="project")?"grid":"none";
+  $("#nv-work").classList.toggle("act",v==="work"||v==="project");
+  $("#nv-connect").classList.toggle("act",v==="connect");
+  scrollTo(0,0);
+}
+addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>
